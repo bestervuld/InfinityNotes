@@ -1,33 +1,79 @@
 <script>
+	function toggle_error(q, error_text = ""){
+		q.removeClass("has-success");
+		q.addClass("has-error");
+		if(error_text != "") q.find("label").html(error_text);
+	}
 
+	function no_errors(q){
+		q.removeClass("has-error");
+		q.addClass("has-success");
+		q.find("label").html("Oook...");
+	}
+
+	function check_for_null(login, pas, lgn_error_obj, pas_error_obj)
+	{
+		if(login == "") {
+			toggle_error(lgn_error_obj, "Enter the login!")
+			return false;
+		}
+
+		no_errors(lgn_error_obj);
+
+		if(pas == ""){
+			toggle_error(pas_error_obj, "Enter the pas!");
+			return false;
+		}
+		 
+		no_errors(pas_error_obj);
+
+		return true;
+	}
+
+	$("#submit").click(function(){
+		var login, pas, rme;
+		login = $("#i_login").val();
+		pas = $("#i_pas").val();
+		rme = $("#rme").is(':checked');
+
+		var lgn_error_obj, pas_error_obj;		
+		lgn_error_obj = $("#i_login").parent().parent();
+		pas_error_obj = $("#i_pas").parent().parent();
+
+		if(check_for_null(login, pas, lgn_error_obj, pas_error_obj) )	
+		{
+
+		}
+
+	});
 </script>
 
-<h3>Sign in</h3> 
 <form class="form-horizontal">
+	<h3>Sign in</h3> 
     <div class="form-group">
-      <label for="login" class="control-label">Enter the nickname or email</label>
+      <label for="i_login" class="control-label">Enter the nickname or email</label>
       <div class="col-sm-12">
-        <input type="email" class="form-control" id="login" placeholder="Login">
+        <input type="email" class="form-control" id="i_login" placeholder="Login">
       </div>
     </div>
     <div class="form-group">
-      <label for="pas" class=" control-label">Password</label>
+      <label for="i_pas" class=" control-label">Password</label>
       <div class="col-sm-12">
-        <input type="password" class="form-control" id="pas" placeholder="Password">
+        <input type="password" class="form-control" id="i_pas" placeholder="Password">
       </div>
     </div>
     <div class="form-group">
       <div class=" col-sm-12">
         <div class="checkbox">
           <label>
-            <input type="checkbox"> Remember me
+            <input type="checkbox" id = "rme" value = "1"> Remember me
           </label>
         </div>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-12">
-        <button type="submit" class="btn btn-default">Sign in</button>
+        <button type="button" class="btn btn-default" id = "submit">Sign in</button>
       </div>
     </div>
   </form>
